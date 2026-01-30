@@ -18,7 +18,7 @@ const pictures = [
   "DSC02031",
   "DSC02064",
   "DSC02069",
-];
+
 
 export const pageAtom = atom(0);
 export const pages = [
