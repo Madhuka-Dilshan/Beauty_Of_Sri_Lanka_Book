@@ -44,7 +44,7 @@ export const UI = () => {
     });
   }, [page]);
 
-  // Background music after user interaction
+  // Background music after first user interaction
   useEffect(() => {
     const startBgMusic = () => {
       if (!bgAudioRef.current) {
@@ -56,12 +56,10 @@ export const UI = () => {
         });
         bgAudioRef.current = bgAudio;
       }
-      // Remove event listeners after first interaction
       window.removeEventListener("click", startBgMusic);
       window.removeEventListener("keydown", startBgMusic);
     };
 
-    // Wait for first user interaction
     window.addEventListener("click", startBgMusic);
     window.addEventListener("keydown", startBgMusic);
 
@@ -90,33 +88,31 @@ export const UI = () => {
         Beauty Of Sri Lanka
       </h1>
 
-      {/* Page buttons */}
-      <div className="w-full overflow-auto pointer-events-auto flex justify-center mt-6">
-        <div className="overflow-auto flex items-center gap-4 max-w-full p-10">
-          {[...pages].map((_, index) => (
-            <button
-              key={index}
-              className={`border-transparent hover:border-white transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase shrink-0 border ${
-                index === page
-                  ? "bg-white/90 text-black"
-                  : "bg-black/30 text-white"
-              }`}
-              onClick={() => setPage(index)}
-            >
-              {index === 0 ? "Cover" : `Page ${index}`}
-            </button>
-          ))}
+      {/* Page buttons vertically on the right */}
+      <div className="pointer-events-auto fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20 max-h-[90%] overflow-auto p-2">
+        {[...pages].map((_, index) => (
           <button
-            className={`border-transparent hover:border-white transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase shrink-0 border ${
-              page === pages.length
+            key={index}
+            className={`border-transparent hover:border-white transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase border ${
+              index === page
                 ? "bg-white/90 text-black"
                 : "bg-black/30 text-white"
             }`}
-            onClick={() => setPage(pages.length)}
+            onClick={() => setPage(index)}
           >
-            Back Cover
+            {index === 0 ? "Cover" : `Page ${index}`}
           </button>
-        </div>
+        ))}
+        <button
+          className={`border-transparent hover:border-white transition-all duration-300 px-4 py-3 rounded-full text-lg uppercase border ${
+            page === pages.length
+              ? "bg-white/90 text-black"
+              : "bg-black/30 text-white"
+          }`}
+          onClick={() => setPage(pages.length)}
+        >
+          Back Cover
+        </button>
       </div>
     </main>
   );
